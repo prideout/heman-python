@@ -1,0 +1,5 @@
+#! /usr/bin/env python
+
+"Generate a random island."
+
+import heman
