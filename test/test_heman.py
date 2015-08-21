@@ -2,4 +2,5 @@ import heman
 
 
 def test_heman():
-    pass
+    img = heman.image_create(128, 128, 1)
+    heman.image_destroy(img)

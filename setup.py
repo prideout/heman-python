@@ -1,7 +1,7 @@
 from setuptools import setup, Extension
 from glob import glob
 
-ext_src = glob('ext/src/*.c') + glob('ext/kazmath/*.c')
+ext_src = glob('ext/src/*.c') + glob('ext/kazmath/*.c') + ['heman.i']
 include_dirs = ['ext/include', 'ext']
 gcc_args = '-fopenmp -O3 -std=c99'.split()
 link_args = ['-fopenmp']

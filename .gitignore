@@ -1,3 +1,6 @@
-heman.egg-info
+*.egg-info
 *.pyc
 dist
+*_wrap.c
+*.so
+heman.py
