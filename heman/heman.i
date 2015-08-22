@@ -21,6 +21,7 @@ import_array();
 %include "../ext/include/heman.h"
 
 %rename (heman_color_create_gradient) color_create_gradient;
+%rename (heman_export_u8) export_u8;
 
 %inline %{
 heman_image* color_create_gradient(int width,
@@ -33,5 +34,12 @@ heman_image* color_create_gradient(int width,
         return 0;
     }
     return heman_color_create_gradient(width, ncols, locs, cols);
+}
+
+void export_u8(
+    heman_image* source, HEMAN_FLOAT minv, HEMAN_FLOAT maxv,
+    int DIM1, unsigned char* INPLACE_ARRAY1)
+{
+    heman_export_u8(source, minv, maxv, INPLACE_ARRAY1);
 }
 %}

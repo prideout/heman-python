@@ -14,5 +14,5 @@ class Color(object):
 
     @staticmethod
     def apply_gradient(hmap, minv, maxv, grad):
-        img = _heman.heman_color_apply_gradient(hmap.img, minv, maxc, grad.img)
+        img = _heman.heman_color_apply_gradient(hmap.img, minv, maxv, grad.img)
         return Image(img)
