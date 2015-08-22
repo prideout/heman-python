@@ -8,4 +8,6 @@ class Export(object):
         width, height, nbands = _heman.heman_image_info(img.img)
         arr = numpy.zeros(width * height * nbands, dtype=numpy.uint8)
         _heman.heman_export_u8(img.img, minv, maxv, arr)
-        return numpy.reshape(arr, (width, height, nbands))
+        if nbands > 1:
+            return numpy.reshape(arr, (width, height, nbands))
+        return numpy.reshape(arr, (width, height))

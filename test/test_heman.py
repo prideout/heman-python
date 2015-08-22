@@ -17,17 +17,34 @@ LIGHTPOS = (-.5, .5, 1)
 
 
 def test_trivial():
-    img = heman.Image.create(128, 128, 1)
-    assert img.width == 128
-    assert img.height == 128
+
+    # Create a 1 band image, which translates to a 2D numpy array.
+    img = heman.Image.create(32, 48, 1)
+    assert img.width == 32
+    assert img.height == 48
     assert img.nbands == 1
+    assert img.array.shape == (32, 48)
+
+    # Create a multi-band image, which translates to a 3D numpy array.
+    img = heman.Image.create(32, 48, 3)
+    assert img.width == 32
+    assert img.height == 48
+    assert img.nbands == 3
+    assert img.array.shape == (32, 48, 3)
 
 
 def test_generate():
+
+    # Generate a random height field whose values are in [-1, +1].
     island = heman.Generate.island_heightmap(256, 256, 90)
-    floats = (island.array + 1.0) * 0.5 * 255.0
-    im = PIL.Image.fromarray(floats, 'F').convert('L')
-    im.save('elevation.png')
+
+    # Perform a manual conversion of the F32 image to U8.
+    fparray = (island.array + 1.0) * 0.5 * 255.0
+    PIL.Image.fromarray(fparray).convert('L').save('elevation0.png')
+
+    # Now, try a more convenient way of doing the same thing.
+    u8array = heman.Export.u8(island, -1, 1)
+    PIL.Image.fromarray(u8array).save('elevation1.png')
 
 
 def test_render():
