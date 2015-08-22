@@ -5,8 +5,10 @@ from . import Image
 class Color(object):
     @staticmethod
     def create_gradient(width, controlpts):
-        locs = []  # TODO
-        vals = []  # TODO
+        assert len(controlpts) >= 2
+        assert 0 == (len(controlpts) % 2)
+        locs = controlpts[::2]
+        vals = controlpts[1::2]
         img = _heman.heman_color_create_gradient(width, locs, vals)
         return Image(img)
 

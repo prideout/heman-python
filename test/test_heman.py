@@ -30,14 +30,14 @@ def test_generate():
     im.save('elevation.png')
 
 
-def tdd_render():
+def test_render():
     elevation = heman.Generate.island_heightmap(256, 256, 90)
     grad = heman.Color.create_gradient(256, GRADIENT)
-    albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
-    final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
-    array = heman.Export.u8(final, 0, 1)
-    im = PIL.Image.fromarray(array, 'RGB')
-    im.save('island.png')
+    # albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
+    # final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
+    # array = heman.Export.u8(final, 0, 1)
+    # im = PIL.Image.fromarray(array, 'RGB')
+    # im.save('island.png')
 
 
 def test_distance():
