@@ -5,28 +5,16 @@ import numpy as np
 
 
 def test_trivial():
-    img = heman.image_create(128, 128, 1)
-    width, height, nbands = heman._heman.heman_image_info(img)
-    assert width == 128
-    assert height == 128
-    assert nbands == 1
-    heman.image_destroy(img)
+    img = heman.Image.create(128, 128, 1)
+    assert img.width == 128
+    assert img.height == 128
+    assert img.nbands == 1
 
 
 def test_generate():
-    island = heman.generate_island_heightmap(256, 256, 90)
-    floats = heman.image_array(island)
-    assert len(floats) == 65536
-    floats = np.reshape(floats, (256, 256))
-    floats = (floats + 1.0) * 0.5 * 255.0
-    im = PIL.Image.fromarray(floats, 'F').convert('L')
-    im.save('island.png')
-    heman.image_destroy(island)
-
-
-def tdd_generate():
     island = heman.Generate.island_heightmap(256, 256, 90)
-    im = PIL.Image.fromarray(island.array(), 'F')
+    floats = (island.array + 1.0) * 0.5 * 255.0
+    im = PIL.Image.fromarray(floats, 'F').convert('L')
     im.save('elevation.png')  # todo save an exr too
 
 
