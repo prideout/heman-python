@@ -8,4 +8,4 @@ RUN apt-get -y update --fix-missing && apt-get install -y \
     wget unzip swig
 
 RUN pip install sphinx sphinx-autobuild numpy pillow pytest
-RUN echo "cd /heman" >> /root/.bashrc
+RUN echo "cd /home" >> /root/.bashrc
