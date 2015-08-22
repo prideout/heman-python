@@ -22,6 +22,7 @@ import_array();
 
 %rename (heman_color_create_gradient) color_create_gradient;
 %rename (heman_export_u8) export_u8;
+%rename (heman_lighting_apply) lighting_apply;
 
 %inline %{
 heman_image* color_create_gradient(int width,
@@ -41,5 +42,15 @@ void export_u8(
     int DIM1, unsigned char* INPLACE_ARRAY1)
 {
     heman_export_u8(source, minv, maxv, INPLACE_ARRAY1);
+}
+
+heman_image* lighting_apply(heman_image* heightmap,
+    heman_image* colorbuffer, float occlusion, float diffuse,
+    float diffuse_softening, float lx, float ly, float lz)
+{
+    float lightpos[3] = { lx, ly, lz };
+    return heman_lighting_apply(heightmap,
+        colorbuffer, occlusion, diffuse,
+        diffuse_softening, lightpos);
 }
 %}
