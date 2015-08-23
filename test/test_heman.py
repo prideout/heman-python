@@ -72,5 +72,5 @@ def test_distance():
     image.save('seed.png')
     array = np.asarray(image, dtype=np.uint8)
     seed = heman.Import.u8(array, 0, 1)
-    # df = heman.Distance.create_sdf(seed)
-    # PIL.Image.fromarray(heman.Export.u8(df, 0, 1)).save('distance.png')
+    df = heman.Distance.create_sdf(seed)
+    PIL.Image.fromarray(heman.Export.u8(df, -1, 1)).save('distance.png')
