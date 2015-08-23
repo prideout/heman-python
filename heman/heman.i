@@ -22,6 +22,7 @@ import_array();
 
 %rename (heman_color_create_gradient) color_create_gradient;
 %rename (heman_export_u8) export_u8;
+%rename (heman_import_u8) import_u8;
 %rename (heman_lighting_apply) lighting_apply;
 
 %inline %{
@@ -42,6 +43,12 @@ void export_u8(
     int DIM1, unsigned char* INPLACE_ARRAY1)
 {
     heman_export_u8(source, minv, maxv, INPLACE_ARRAY1);
+}
+
+heman_image* import_u8(int width, int height, int nbands,
+    int DIM1, unsigned char* IN_ARRAY1, HEMAN_FLOAT minval, HEMAN_FLOAT maxval)
+{
+    return heman_import_u8(width, height, nbands, IN_ARRAY1, minval, maxval);
 }
 
 heman_image* lighting_apply(heman_image* heightmap,

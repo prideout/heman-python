@@ -58,7 +58,7 @@ def test_render():
 
 
 def test_distance():
-    image = PIL.Image.new('L', (2048, 2028))
+    image = PIL.Image.new('L', (2048, 2048))
     draw = PIL.ImageDraw.Draw(image)
     x = 1024
     y = 1024
@@ -71,6 +71,6 @@ def test_distance():
     draw.ellipse((x-r, y-r, x+r, y+r), fill=255)
     image.save('seed.png')
     array = np.asarray(image, dtype=np.uint8)
-    # seed = heman.Import.u8(array, 0, 1)
+    seed = heman.Import.u8(array, 0, 1)
     # df = heman.Distance.create_sdf(seed)
-    # PIL.Image.fromarray(heman.Export.u8(df, 0, 1), 'L').save('distance.png')
+    # PIL.Image.fromarray(heman.Export.u8(df, 0, 1)).save('distance.png')

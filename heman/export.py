@@ -1,5 +1,6 @@
 import _heman
 import numpy
+from . import Image
 
 
 class Export(object):
@@ -11,3 +12,15 @@ class Export(object):
         if nbands > 1:
             return numpy.reshape(arr, (width, height, nbands))
         return numpy.reshape(arr, (width, height))
+
+
+class Import(object):
+    @staticmethod
+    def u8(arr, minv, maxv):
+        nbands = 1
+        if len(arr.shape) > 2:
+            nbands = arr.shape[2]
+        width, height = arr.shape[:2]
+        arr = numpy.reshape(arr, width * height * nbands)
+        img = _heman.heman_import_u8(width, height, nbands, arr, minv, maxv)
+        return Image(img)
