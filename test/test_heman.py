@@ -53,8 +53,14 @@ def test_render():
     albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
     final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
     array = heman.Export.u8(final, 0, 1)
-    im = PIL.Image.fromarray(array, 'RGB')
-    im.save('island.png')
+    PIL.Image.fromarray(array, 'RGB').save('island.png')
+
+
+def test_occlusion():
+    elevation = heman.Generate.island_heightmap(256, 256, 90)
+    ao = heman.Lighting.compute_occlusion(elevation)
+    array = heman.Export.u8(ao, 0, 1)
+    PIL.Image.fromarray(array, 'L').save('occlusion.png')
 
 
 def test_distance():

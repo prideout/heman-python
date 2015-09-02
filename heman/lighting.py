@@ -10,3 +10,8 @@ class Lighting(object):
         return Image(_heman.heman_lighting_apply(
             elevation.img, albedo.img, occlusion,
             diffuse, softening, x, y, z))
+
+    @staticmethod
+    def compute_occlusion(elevation):
+        assert elevation.nbands == 1
+        return Image(_heman.heman_lighting_compute_occlusion(elevation.img))
