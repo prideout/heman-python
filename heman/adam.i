@@ -1,12 +1,17 @@
-%module heman
+%module adam
 
 %{
 #define SWIG_FILE_WITH_INIT
 #include "heman.h"
 %}
 
+%inline %{
+    typedef heman_image* heman_image_ptr;
+%}
+
 %include "numpy.i"
 %include "typemaps.i"
+%include "carrays.i"
 
 %init %{
 import_array();
@@ -17,6 +22,8 @@ import_array();
 
 %apply (int DIM1, int* IN_ARRAY1) {(int nlocs, int* locs)}
 %apply (int DIM1, unsigned int* IN_ARRAY1) {(int ncols, unsigned int* cols)}
+
+%array_class(heman_image_ptr, HemanImageArray);
 
 %include "../ext/include/heman.h"
 

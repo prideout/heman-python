@@ -1,4 +1,4 @@
-import _heman
+import adam
 from . import Image
 
 
@@ -7,11 +7,11 @@ class Lighting(object):
     def apply(elevation, albedo, occlusion, diffuse, softening, lightpos):
         assert len(lightpos) == 3
         x, y, z = lightpos
-        return Image(_heman.heman_lighting_apply(
+        return Image(adam.heman_lighting_apply(
             elevation.img, albedo.img, occlusion,
             diffuse, softening, x, y, z))
 
     @staticmethod
     def compute_occlusion(elevation):
         assert elevation.nbands == 1
-        return Image(_heman.heman_lighting_compute_occlusion(elevation.img))
+        return Image(adam.heman_lighting_compute_occlusion(elevation.img))

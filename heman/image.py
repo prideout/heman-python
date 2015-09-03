@@ -1,11 +1,11 @@
-import _heman
+import adam
 import numpy
 
 
 class Image(object):
     def __init__(self, img):
-        width, height, nbands = _heman.heman_image_info(img)
-        nparray = _heman.heman_image_array(img)
+        width, height, nbands = adam.heman_image_info(img)
+        nparray = adam.heman_image_array(img)
         self.img = img
         self.width = width
         self.height = height
@@ -17,8 +17,8 @@ class Image(object):
 
     @classmethod
     def create(cls, width, height, nbands):
-        img = _heman.heman_image_create(width, height, nbands)
+        img = adam.heman_image_create(width, height, nbands)
         return cls(img)
 
     def __del__(self):
-        _heman.heman_image_destroy(self.img)
+        adam.heman_image_destroy(self.img)

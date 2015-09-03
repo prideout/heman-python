@@ -12,7 +12,7 @@ alias heman-test="docker start heman && docker exec -i heman bash -c 'cd /home ;
 alias heman-python="docker start heman && docker exec -it heman python"
 alias heman-clean="
     rm -rf build dist test/__pycache__ >/dev/null 2>&1;
-    ls -1 **/*_wrap.c **/*.so **/heman.py | xargs rm"
+    ls -1 **/*_wrap.c **/*.so | xargs rm"
 
 heman-clean
 heman-start
