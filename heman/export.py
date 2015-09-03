@@ -10,8 +10,8 @@ class Export(object):
         arr = numpy.zeros(width * height * nbands, dtype=numpy.uint8)
         adam.heman_export_u8(img.img, minv, maxv, arr)
         if nbands > 1:
-            return numpy.reshape(arr, (width, height, nbands))
-        return numpy.reshape(arr, (width, height))
+            return numpy.reshape(arr, (height, width, nbands))
+        return numpy.reshape(arr, (height, width))
 
 
 class Import(object):
@@ -20,7 +20,7 @@ class Import(object):
         nbands = 1
         if len(arr.shape) > 2:
             nbands = arr.shape[2]
-        width, height = arr.shape[:2]
+        height, width = arr.shape[:2]
         arr = numpy.reshape(arr, width * height * nbands)
         img = adam.heman_import_u8(width, height, nbands, arr, minv, maxv)
         return Image(img)

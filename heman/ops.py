@@ -9,8 +9,8 @@ class Ops(object):
         image_array = adam.HemanImageArray(n)
         for i in xrange(len(image_list)):
             image_array[i] = image_list[i].img
-        # im = adam.heman_ops_stitch_horizontal(image_array, n)
-        # return Image(im)
+        im = adam.heman_ops_stitch_horizontal(image_array.cast(), n)
+        return Image(im)
 
     @staticmethod
     def stitch_vertical(images):

@@ -57,10 +57,18 @@ def test_render():
 
 
 def test_occlusion():
-    elevation = heman.Generate.island_heightmap(256, 256, 90)
-    ao = heman.Lighting.compute_occlusion(elevation)
-    array = heman.Export.u8(ao, 0, 1)
+    elevation0 = heman.Generate.island_heightmap(256, 256, 90)
+    ao0 = heman.Lighting.compute_occlusion(elevation0)
+    array = heman.Export.u8(ao0, 0, 1)
     PIL.Image.fromarray(array, 'L').save('occlusion.png')
+    elevation1 = heman.Generate.island_heightmap(256, 256, 91)
+    ao1 = heman.Lighting.compute_occlusion(elevation1)
+    filmstrip = heman.Ops.stitch_horizontal([ao0, ao1])
+    assert filmstrip.nbands == 1
+    assert filmstrip.width == 512
+    assert filmstrip.height == 256
+    array = heman.Export.u8(filmstrip, 0, 1)
+    PIL.Image.fromarray(array, 'L').save('filmstrip.png')
 
 
 def test_distance():
