@@ -83,6 +83,48 @@ def test_occlusion():
     PIL.Image.fromarray(array, 'L').save('filmstrip.png')
 
 
+# Convert a PIL grayscale image into a heman image.
+def to_heman(im, height):
+    return heman.Import.u8(np.asarray(im, dtype=np.uint8), 0, height)
+
+
+def test_shapes():
+
+    HEIGHT = 0.01
+
+    # Circle
+    im = PIL.Image.new('L', (512, 512), 0)
+    dc = PIL.ImageDraw.Draw(im)
+    radius = 128
+    padding = im.size[0] / 2 - radius
+    a = padding
+    b = im.size[0] - padding
+    dc.ellipse([a, a, b, b], 255)
+    del dc
+    circle = to_heman(im, HEIGHT)
+
+    # Square
+    im = PIL.Image.new('L', (512, 512), 0)
+    dc = PIL.ImageDraw.Draw(im)
+    dc.polygon([128, 128, 384, 128, 384, 384, 128, 384], 255)
+    del dc
+    square = to_heman(im, HEIGHT)
+
+    # Triangle
+    im = PIL.Image.new('L', (512, 512), 0)
+    dc = PIL.ImageDraw.Draw(im)
+    dc.polygon([256, 128, 384, 384, 128, 384], 255)
+    del dc
+    triangle = to_heman(im, HEIGHT)
+
+    # Compute AO and export the result.
+    shapes = heman.Ops.stitch_horizontal([circle, square, triangle])
+    ao = heman.Lighting.compute_occlusion(shapes)
+    im = PIL.Image.fromarray(heman.Export.u8(ao, 0.25, 1), 'L')
+    im.thumbnail((768, 256))
+    im.save('shapes.png')
+
+
 def test_distance():
     image = PIL.Image.new('L', (2048, 2048))
     draw = PIL.ImageDraw.Draw(image)
@@ -97,3 +139,7 @@ def test_distance():
     seed = heman.Import.u8(array, 0, 1)
     df = heman.Distance.create_sdf(seed)
     PIL.Image.fromarray(heman.Export.u8(df, -1, 1)).save('distance.png')
+
+
+if __name__ == '__main__':
+    test_shapes()
