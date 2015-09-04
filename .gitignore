@@ -6,3 +6,4 @@ dist
 heman.py
 .DS_Store
 *.png
+.coverage

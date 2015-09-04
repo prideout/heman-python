@@ -9,6 +9,7 @@ alias heman-start="docker run -itd -v $(pwd):/home --name=heman heman bash"
 alias heman-bash="docker start heman && docker attach heman"
 alias heman-kill="docker rm -f heman"
 alias heman-test="docker start heman && docker exec -i heman bash -c 'cd /home ; python setup.py install && py.test'"
+alias heman-coverage="docker start heman && docker exec -i heman bash -c 'cd /home ; py.test --cov=heman test/test_heman.py'"
 alias heman-python="docker start heman && docker exec -it heman python"
 alias heman-clean="
     rm -rf build dist test/__pycache__ >/dev/null 2>&1;
@@ -17,3 +18,4 @@ alias heman-clean="
 heman-clean
 heman-start
 heman-test
+heman-coverage

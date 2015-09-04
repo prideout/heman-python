@@ -13,8 +13,13 @@ class Ops(object):
         return Image(im)
 
     @staticmethod
-    def stitch_vertical(images):
-        return None
+    def stitch_vertical(image_list):
+        n = len(image_list)
+        image_array = adam.HemanImageArray(n)
+        for i in xrange(len(image_list)):
+            image_array[i] = image_list[i].img
+        im = adam.heman_ops_stitch_vertical(image_array.cast(), n)
+        return Image(im)
 
     @staticmethod
     def normalize_f32(source, minval, maxval):

@@ -33,7 +33,7 @@ def test_trivial():
     assert img.array.shape == (32, 48, 3)
 
 
-def test_generate():
+def test_generate_island():
 
     # Generate a random height field whose values are in [-1, +1].
     island = heman.Generate.island_heightmap(256, 256, 90)
@@ -45,6 +45,18 @@ def test_generate():
     # Now, try a more convenient way of doing the same thing.
     u8array = heman.Export.u8(island, -1, 1)
     PIL.Image.fromarray(u8array).save('elevation1.png')
+
+
+def test_generate_planets():
+    planet0 = heman.Generate.planet_heightmap(512, 256, 90)
+    planet1 = heman.Generate.planet_heightmap(512, 256, 91)
+    planets = heman.Ops.stitch_vertical([planet0, planet1])
+    grad = heman.Color.create_gradient(256, GRADIENT)
+    albedo = heman.Color.apply_gradient(planets, -0.5, 0.5, grad)
+    final = heman.Lighting.apply(planets, albedo, 1, 1, 0.5, LIGHTPOS)
+    im = PIL.Image.fromarray(heman.Export.u8(final, 0, 1), 'RGB')
+    im.thumbnail((256, 256))
+    im.save('planets.png')
 
 
 def test_render():
@@ -74,12 +86,9 @@ def test_occlusion():
 def test_distance():
     image = PIL.Image.new('L', (2048, 2048))
     draw = PIL.ImageDraw.Draw(image)
-    x = 1024
-    y = 1024
-    r = 512
+    x, y, r = 1024, 1024, 512
     draw.ellipse((x-r, y-r, x+r, y+r), fill=255)
-    y = 512
-    r = 256
+    y, r = 512, 256
     draw.ellipse((x-r, y-r, x+r, y+r), fill=255)
     y = 1024 + 512
     draw.ellipse((x-r, y-r, x+r, y+r), fill=255)
