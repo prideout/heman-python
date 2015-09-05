@@ -15,3 +15,8 @@ class Lighting(object):
     def compute_occlusion(elevation):
         assert elevation.nbands == 1
         return Image(adam.heman_lighting_compute_occlusion(elevation.img))
+
+    @staticmethod
+    def compute_normals(elevation):
+        assert elevation.nbands == 1
+        return Image(adam.heman_lighting_compute_normals(elevation.img))

@@ -2,6 +2,7 @@ import heman
 import numpy as np
 import PIL.Image
 import PIL.ImageDraw
+import PIL.ImageEnhance
 
 GRADIENT = [
     000, 0x001070,
@@ -36,7 +37,7 @@ def test_trivial():
 def test_generate_island():
 
     # Generate a random height field whose values are in [-1, +1].
-    island = heman.Generate.island_heightmap(256, 256, 90)
+    island = heman.Generate.island_heightmap(256, 256, 92)
 
     # Perform a manual conversion of the F32 image to U8.
     fparray = (island.array + 1.0) * 0.5 * 255.0
@@ -45,6 +46,20 @@ def test_generate_island():
     # Now, try a more convenient way of doing the same thing.
     u8array = heman.Export.u8(island, -1, 1)
     PIL.Image.fromarray(u8array).save('elevation1.png')
+
+    # Clamp to [-0.5, +0.5], then shift the values to fit in [0, +1].
+    island = heman.Ops.normalize_f32(island, -0.5, 0.5)
+    PIL.Image.fromarray(heman.Export.u8(island, 0, 1)).save('elevation2.png')
+
+    # Convert from grayscale to monochrome using the step function.
+    mask = heman.Ops.step(island, 0.5)
+    PIL.Image.fromarray(heman.Export.u8(mask, 0, 1)).save('mask.png')
+
+    # Visualize the land coverage along each row of pixels.
+    sweep = heman.Ops.sweep(mask)
+    im = PIL.Image.fromarray(heman.Export.u8(sweep, 0, 1)).rotate(-90)
+    im = PIL.ImageEnhance.Brightness(im).enhance(2)
+    im.resize((256, 256)).save('sweep.png')
 
 
 def test_generate_planets():

@@ -13,6 +13,14 @@ class Export(object):
             return numpy.reshape(arr, (height, width, nbands))
         return numpy.reshape(arr, (height, width))
 
+    @staticmethod
+    def ply(hmap, filename):
+        adam.heman_export_ply(hmap.img, filename)
+
+    @staticmethod
+    def with_colors_ply(hmap, colors, filename):
+        adam.heman_export_with_colors_ply(hmap.img, colors.img, filename)
+
 
 class Import(object):
     @staticmethod

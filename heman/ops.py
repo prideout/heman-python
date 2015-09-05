@@ -23,12 +23,12 @@ class Ops(object):
 
     @staticmethod
     def normalize_f32(source, minval, maxval):
-        return None
+        return Image(adam.heman_ops_normalize_f32(source.img, minval, maxval))
 
     @staticmethod
     def step(img, threshold):
-        return None
+        return Image(adam.heman_ops_step(img.img, threshold))
 
     @staticmethod
     def sweep(img):
-        return None
+        return Image(adam.heman_ops_sweep(img.img))

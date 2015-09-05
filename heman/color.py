@@ -16,3 +16,7 @@ class Color(object):
     def apply_gradient(hmap, minv, maxv, grad):
         img = adam.heman_color_apply_gradient(hmap.img, minv, maxv, grad.img)
         return Image(img)
+
+    @staticmethod
+    def set_gamma(f):
+        adam.heman_color_set_gamma(f)
