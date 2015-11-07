@@ -12,7 +12,7 @@ source aws-setup.sh
 heman-bash
 ```
 
-After you're in the machine's shell, you can build and run the heman project as follows.
+After you're in the machine's shell, you can build the heman project like this.
 
 ```
 source env/bin/activate
@@ -20,12 +20,20 @@ git clone https://github.com/prideout/heman-python.git && cd heman-python
 git submodule init && git submodule update
 python setup.py build_ext
 python setup.py develop
+```
+
+Finally, you can now generate a terrain, leave the remote machine, and copy over the resulting image for inspection.
+
+```
 heman-gen
 ^D
 scp -i yoshi.pem ec2-user@$DNSNAME:/home/ec2-user/heman-python/island.png .
+open island.png
 ```
 
 ### Ending your workday
+
+Make sure you don't have any expensive instances still running:
 
 ```
 aws ec2 terminate-instances --instance-ids $INSTANCEID

@@ -5,7 +5,7 @@
 #   2. That you have an AWS key-pair named "yoshi".
 #   3. That you have a cert file named "yoshi.pem".
 #
-# If any of these are untrue, look at README.
+# If any of these are untrue, study the README.
 
 export SGROUP=`aws ec2 describe-security-groups --group-name heman_security --query 'SecurityGroups[*].[GroupId]'`
 export IMAGEID=`aws ec2 describe-images --owners self --filters="Name=name,Values=lambdadev" --query Images[].[ImageId]`
