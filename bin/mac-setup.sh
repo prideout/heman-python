@@ -7,5 +7,5 @@
 
 source env/bin/activate
 python setup.py build_ext
-python setup.py develop
+python setup.py build
 py.test test/test_heman.py

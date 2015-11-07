@@ -19,7 +19,9 @@ setup(
     version='0.1',
     description='height map utility belt',
     author='Philip Rideout',
-    scripts=['bin/heman-gen'],
+    scripts=[
+        'bin/heman-gen-island.py',
+        'bin/heman-gen-scalloped.py'],
     ext_modules=[Extension(
         '_adam',
         ext_src,

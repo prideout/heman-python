@@ -18,7 +18,7 @@ After that, you just do this in a fresh terminal:
 ```
 source env/bin/activate
 python setup.py build_ext
-python setup.py develop
+python setup.py build
 py.test test/test_heman.py
 ```
 
@@ -48,7 +48,7 @@ python setup.py develop
 Finally, you can now generate a terrain, leave the remote machine, and copy over the resulting image for inspection.
 
 ```
-heman-gen
+heman-gen-island.py
 ^D
 scp -i yoshi.pem ec2-user@$DNSNAME:/home/ec2-user/heman-python/island.png .
 open island.png

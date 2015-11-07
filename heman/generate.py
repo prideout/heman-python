@@ -20,3 +20,16 @@ class Generate(object):
     def planet_heightmap(width, height, seed):
         img = adam.heman_generate_planet_heightmap(width, height, seed)
         return Image(img)
+
+    @staticmethod
+    def archipelago_heightmap(width, height, points, noiseamt, seed):
+        img = adam.heman_generate_archipelago_heightmap(
+            width, height, points, noiseamt, seed)
+        return Image(img)
+
+    # @staticmethod
+    # def archipelago_political(width, height, points, colors, ocean_color,
+    #                           noiseamt, seed):
+    #     el, po = adam.heman_generate_archipelago_political(
+    #         width, height, points, colors, ocean_color, noiseamt, seed)
+    #     return Image(el), Image(po)
