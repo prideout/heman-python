@@ -2,12 +2,17 @@ from setuptools import setup, Extension
 from glob import glob
 import os.path
 import numpy
+import sys
 
 numpyinc = os.path.join(numpy.__path__[0], 'core/include')
 ext_src = glob('ext/src/*.c') + glob('ext/kazmath/*.c') + ['heman/adam.i']
 include_dirs = ['ext/include', 'ext', numpyinc]
-gcc_args = '-fopenmp -O3 -std=c99'.split()
-link_args = ['-fopenmp']
+gcc_args = '-O3 -std=c99'.split()
+link_args = []
+
+if sys.platform != 'darwin':
+    link_args += '-fopenmp'
+    gcc_args += '-fopenmp'
 
 setup(
     name='heman',

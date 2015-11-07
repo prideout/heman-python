@@ -16,7 +16,7 @@ def generate_island():
     final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
     array = heman.Export.u8(final, 0, 1)
     im = PIL.Image.fromarray(array, 'RGB')
-    im.resize(1024, 1024).save('island.png')
+    im.resize((1024, 1024)).save('island.png')
 
 
 GRADIENT = [
