@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+# Please invoke this by typing: "source docker-setup.sh"
 
 docker-machine create --driver virtualbox heman --virtualbox-cpu-count "4" 2>&1
 eval "$(docker-machine env heman)"

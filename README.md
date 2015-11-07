@@ -1,14 +1,37 @@
 
 [![Build Status](https://travis-ci.org/prideout/heman-python.svg?branch=master)](https://travis-ci.org/prideout/heman-python)
 
+### OS X
+
+If you're building this for the first time, here are the prerequisites:
+
+```
+brew install swig
+virtualenv env
+source env/bin/activate
+pip install numpy pillow pytest
+git submodule init && git submodule update
+```
+
+After that, you just do this in a fresh terminal:
+
+```
+source env/bin/activate
+python setup.py build_ext
+python setup.py build
+py.test test/test_heman.py
+```
+
+The above command sequence is also in `bin/mac-setup.sh`.
+
 ## Building on AWS EC2
 
 ### Starting your workday
 
-The `aws-setup.sh` script instances the **lambdadev** AMI and creates the `heman-bash` alias, which invokes ssh for you.
+The `bin/aws-setup.sh` script instances the **lambdadev** AMI and creates the `heman-bash` alias, which invokes ssh for you.
 
 ```
-source aws-setup.sh
+source bin/aws-setup.sh
 heman-bash
 ```
 

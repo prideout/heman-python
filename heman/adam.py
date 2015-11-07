@@ -149,6 +149,10 @@ def heman_image_sample(arg1, u, v, result):
     return _adam.heman_image_sample(arg1, u, v, result)
 heman_image_sample = _adam.heman_image_sample
 
+def heman_image_clear(arg1, value):
+    return _adam.heman_image_clear(arg1, value)
+heman_image_clear = _adam.heman_image_clear
+
 def heman_image_destroy(arg1):
     return _adam.heman_image_destroy(arg1)
 heman_image_destroy = _adam.heman_image_destroy
@@ -161,6 +165,18 @@ def heman_color_apply_gradient(heightmap, minheight, maxheight, gradient):
     return _adam.heman_color_apply_gradient(heightmap, minheight, maxheight, gradient)
 heman_color_apply_gradient = _adam.heman_color_apply_gradient
 
+def heman_color_from_grayscale(gray):
+    return _adam.heman_color_from_grayscale(gray)
+heman_color_from_grayscale = _adam.heman_color_from_grayscale
+
+def heman_color_to_grayscale(colorimg):
+    return _adam.heman_color_to_grayscale(colorimg)
+heman_color_to_grayscale = _adam.heman_color_to_grayscale
+
+def heman_color_from_cpcf(cfield, texture):
+    return _adam.heman_color_from_cpcf(cfield, texture)
+heman_color_from_cpcf = _adam.heman_color_from_cpcf
+
 def heman_generate_island_heightmap(width, height, seed):
     return _adam.heman_generate_island_heightmap(width, height, seed)
 heman_generate_island_heightmap = _adam.heman_generate_island_heightmap
@@ -168,6 +184,14 @@ heman_generate_island_heightmap = _adam.heman_generate_island_heightmap
 def heman_generate_planet_heightmap(width, height, seed):
     return _adam.heman_generate_planet_heightmap(width, height, seed)
 heman_generate_planet_heightmap = _adam.heman_generate_planet_heightmap
+
+def heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed):
+    return _adam.heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed)
+heman_generate_archipelago_heightmap = _adam.heman_generate_archipelago_heightmap
+
+def heman_generate_archipelago_political(width, height, points, colors, ocean, noiseamt, seed, elevation, political):
+    return _adam.heman_generate_archipelago_political(width, height, points, colors, ocean, noiseamt, seed, elevation, political)
+heman_generate_archipelago_political = _adam.heman_generate_archipelago_political
 
 def heman_generate_simplex_fbm(width, height, frequency, amplitude, octaves, lacunarity, gain, seed):
     return _adam.heman_generate_simplex_fbm(width, height, frequency, amplitude, octaves, lacunarity, gain, seed)
@@ -184,6 +208,18 @@ heman_lighting_compute_occlusion = _adam.heman_lighting_compute_occlusion
 def heman_distance_create_sdf(monochrome):
     return _adam.heman_distance_create_sdf(monochrome)
 heman_distance_create_sdf = _adam.heman_distance_create_sdf
+
+def heman_distance_create_df(monochrome):
+    return _adam.heman_distance_create_df(monochrome)
+heman_distance_create_df = _adam.heman_distance_create_df
+
+def heman_distance_create_cpcf(seed):
+    return _adam.heman_distance_create_cpcf(seed)
+heman_distance_create_cpcf = _adam.heman_distance_create_cpcf
+
+def heman_distance_from_cpcf(cf):
+    return _adam.heman_distance_from_cpcf(cf)
+heman_distance_from_cpcf = _adam.heman_distance_from_cpcf
 
 def heman_export_ply(arg1, filename):
     return _adam.heman_export_ply(arg1, filename)
@@ -212,6 +248,70 @@ heman_ops_step = _adam.heman_ops_step
 def heman_ops_sweep(image):
     return _adam.heman_ops_sweep(image)
 heman_ops_sweep = _adam.heman_ops_sweep
+
+def heman_ops_laplacian(heightmap):
+    return _adam.heman_ops_laplacian(heightmap)
+heman_ops_laplacian = _adam.heman_ops_laplacian
+
+def heman_ops_sobel(dst, edge_color):
+    return _adam.heman_ops_sobel(dst, edge_color)
+heman_ops_sobel = _adam.heman_ops_sobel
+
+def heman_ops_accumulate(dst, src):
+    return _adam.heman_ops_accumulate(dst, src)
+heman_ops_accumulate = _adam.heman_ops_accumulate
+
+def heman_ops_warp(src, seed, octaves):
+    return _adam.heman_ops_warp(src, seed, octaves)
+heman_ops_warp = _adam.heman_ops_warp
+
+def heman_ops_extract_mask(src, color):
+    return _adam.heman_ops_extract_mask(src, color)
+heman_ops_extract_mask = _adam.heman_ops_extract_mask
+
+def heman_ops_replace_color(src, color, texture):
+    return _adam.heman_ops_replace_color(src, color, texture)
+heman_ops_replace_color = _adam.heman_ops_replace_color
+
+def heman_points_create(xy, npoints):
+    return _adam.heman_points_create(xy, npoints)
+heman_points_create = _adam.heman_points_create
+
+def heman_points_destroy(arg1):
+    return _adam.heman_points_destroy(arg1)
+heman_points_destroy = _adam.heman_points_destroy
+
+def heman_points_from_grid(width, height, cellsize, jitter):
+    return _adam.heman_points_from_grid(width, height, cellsize, jitter)
+heman_points_from_grid = _adam.heman_points_from_grid
+
+def heman_points_from_poisson(width, height, mindist):
+    return _adam.heman_points_from_poisson(width, height, mindist)
+heman_points_from_poisson = _adam.heman_points_from_poisson
+
+def heman_points_from_density(density, mindist, maxdist):
+    return _adam.heman_points_from_density(density, mindist, maxdist)
+heman_points_from_density = _adam.heman_points_from_density
+
+def heman_draw_points(target, pts, val):
+    return _adam.heman_draw_points(target, pts, val)
+heman_draw_points = _adam.heman_draw_points
+
+def heman_draw_colored_points(target, coords, colors):
+    return _adam.heman_draw_colored_points(target, coords, colors)
+heman_draw_colored_points = _adam.heman_draw_colored_points
+
+def heman_draw_colored_circles(target, pts, radius, colors):
+    return _adam.heman_draw_colored_circles(target, pts, radius, colors)
+heman_draw_colored_circles = _adam.heman_draw_colored_circles
+
+def heman_draw_splats(target, pts, radius, blend_mode):
+    return _adam.heman_draw_splats(target, pts, radius, blend_mode)
+heman_draw_splats = _adam.heman_draw_splats
+
+def heman_draw_contour_from_points(target, coords, color, mind, maxd):
+    return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd)
+heman_draw_contour_from_points = _adam.heman_draw_contour_from_points
 
 def heman_color_create_gradient(*args):
     return _adam.heman_color_create_gradient(*args)
