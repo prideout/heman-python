@@ -11,8 +11,6 @@ addons:
     - swig
 
 script:
-  - pip install numpy pillow pytest
   - python setup.py build_ext
   - python setup.py install
   - py.test
-  - heman-gen

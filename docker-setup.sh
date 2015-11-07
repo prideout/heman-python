@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-boot2docker up
-eval "$(boot2docker shellinit)"
+docker-machine create --driver virtualbox heman --virtualbox-cpu-count "4" 2>&1
+eval "$(docker-machine env heman)"
 docker rm -f heman >/dev/null 2>&1
 docker build -t heman .
 
@@ -14,6 +14,7 @@ alias heman-python="docker start heman && docker exec -it heman python"
 alias heman-clean="
     rm -rf build dist test/__pycache__ >/dev/null 2>&1;
     ls -1 **/*_wrap.c **/*.so | xargs rm"
+alias heman-clobber="docker-machine rm -f heman >/dev/null 2>&1"
 
 heman-clean
 heman-start
