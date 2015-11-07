@@ -1,4 +1,5 @@
 from image import Image
+from points import Points
 from generate import Generate
 from color import Color
 from export import Export

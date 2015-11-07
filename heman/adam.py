@@ -273,10 +273,6 @@ def heman_ops_replace_color(src, color, texture):
     return _adam.heman_ops_replace_color(src, color, texture)
 heman_ops_replace_color = _adam.heman_ops_replace_color
 
-def heman_points_create(xy, npoints):
-    return _adam.heman_points_create(xy, npoints)
-heman_points_create = _adam.heman_points_create
-
 def heman_points_destroy(arg1):
     return _adam.heman_points_destroy(arg1)
 heman_points_destroy = _adam.heman_points_destroy
@@ -312,6 +308,10 @@ heman_draw_splats = _adam.heman_draw_splats
 def heman_draw_contour_from_points(target, coords, color, mind, maxd):
     return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd)
 heman_draw_contour_from_points = _adam.heman_draw_contour_from_points
+
+def heman_points_create(*args):
+    return _adam.heman_points_create(*args)
+heman_points_create = _adam.heman_points_create
 
 def heman_color_create_gradient(*args):
     return _adam.heman_color_create_gradient(*args)

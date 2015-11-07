@@ -19,7 +19,6 @@ import_array();
 
 %apply int *OUTPUT { int* width, int* height, int* nbands };
 %apply (float** ARGOUTVIEW_ARRAY1, int* DIM1) {(float** outview, int* n)};
-
 %apply (int DIM1, int* IN_ARRAY1) {(int nlocs, int* locs)}
 %apply (int DIM1, unsigned int* IN_ARRAY1) {(int ncols, unsigned int* cols)}
 
@@ -27,12 +26,18 @@ import_array();
 
 %include "../ext/include/heman.h"
 
+%rename (heman_points_create) points_create;
 %rename (heman_color_create_gradient) color_create_gradient;
 %rename (heman_export_u8) export_u8;
 %rename (heman_import_u8) import_u8;
 %rename (heman_lighting_apply) lighting_apply;
 
 %inline %{
+heman_points* points_create(int DIM1, float* IN_ARRAY1, int nbands)
+{
+    return heman_points_create(IN_ARRAY1, DIM1 / nbands, nbands);
+}
+
 heman_image* color_create_gradient(int width,
     int nlocs, int* locs, int ncols, unsigned int* cols)
 {
@@ -67,4 +72,5 @@ heman_image* lighting_apply(heman_image* heightmap,
         colorbuffer, occlusion, diffuse,
         diffuse_softening, lightpos);
 }
+
 %}

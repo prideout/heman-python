@@ -24,7 +24,7 @@ class Generate(object):
     @staticmethod
     def archipelago_heightmap(width, height, points, noiseamt, seed):
         img = adam.heman_generate_archipelago_heightmap(
-            width, height, points, noiseamt, seed)
+            width, height, points.pts, noiseamt, seed)
         return Image(img)
 
     # @staticmethod

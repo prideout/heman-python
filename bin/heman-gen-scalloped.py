@@ -8,20 +8,15 @@ import PIL.Image
 
 
 def generate_terrain():
-
-    elevation = heman.Generate.island_heightmap(1024, 1024, 90)
-
-    points = [
-        0.5, 0.4, 0.4,
-        0.3, 0.5, 0.6,
-        0.7, 0.7, 0.2,
-    ]
+    points = heman.Points.create(np.array([
+        0.5, 0.5, 0.4,
+        0.7, 0.7, 0.8,
+        0.8, 0.2, 0.1
+    ], dtype=np.float32), 3)
     noiseamt = 0.5
-    seed = 123
-
-    # elevation = heman.Generate.archipelago_heightmap(
-    #     800, 450, points, noiseamt, seed)
-
+    seed = 2
+    elevation = heman.Generate.archipelago_heightmap(
+        1024, 1024, points, noiseamt, seed)
     grad = heman.Color.create_gradient(256, GRADIENT)
     albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
     final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
