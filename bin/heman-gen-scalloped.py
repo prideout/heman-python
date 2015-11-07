@@ -6,6 +6,15 @@ import heman
 import numpy as np
 import PIL.Image
 
+POLITICAL_COLORS = [
+    0x92A35F,
+    0xBFD671,
+    0xD8F590
+]
+
+OCEAN_COLOR = 0xB0E6FF
+
+LIGHTPOS = (-.5, .5, 1)
 
 def generate_terrain():
     points = heman.Points.create(np.array([
@@ -15,26 +24,17 @@ def generate_terrain():
     ], dtype=np.float32), 3)
     noiseamt = 0.5
     seed = 2
-    elevation = heman.Generate.archipelago_heightmap(
-        1024, 1024, points, noiseamt, seed)
-    grad = heman.Color.create_gradient(256, GRADIENT)
-    albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
-    final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
+
+    elevation, political = heman.Generate.archipelago_political(
+        1024, 1024, points, POLITICAL_COLORS, OCEAN_COLOR, noiseamt, seed)
+
+    final = heman.Lighting.apply(elevation, political, 1, 1, 0.5, LIGHTPOS)
     array = heman.Export.u8(final, 0, 1)
     im = PIL.Image.fromarray(array, 'RGB')
-    im.save('scalloped.png')
+    im.save('scalloped-rendered.png')
 
-GRADIENT = [
-    000, 0x001070,
-    126, 0x2C5A7C,
-    127, 0xE0F0A0,
-    128, 0x5D943C,
-    160, 0x606011,
-    200, 0xFFFFFF,
-    255, 0xFFFFFF,
-]
-
-LIGHTPOS = (-.5, .5, 1)
+    array = heman.Export.u8(political, 0, 1)
+    PIL.Image.fromarray(array, 'RGB').save('scalloped-political.png')
 
 if __name__ == '__main__':
     import multiprocessing

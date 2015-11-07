@@ -309,6 +309,10 @@ def heman_draw_contour_from_points(target, coords, color, mind, maxd):
     return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd)
 heman_draw_contour_from_points = _adam.heman_draw_contour_from_points
 
+def heman_generate_archipelago_political_2(width, height, ocean, seed, political):
+    return _adam.heman_generate_archipelago_political_2(width, height, ocean, seed, political)
+heman_generate_archipelago_political_2 = _adam.heman_generate_archipelago_political_2
+
 def heman_points_create(*args):
     return _adam.heman_points_create(*args)
 heman_points_create = _adam.heman_points_create
@@ -328,6 +332,10 @@ heman_import_u8 = _adam.heman_import_u8
 def heman_lighting_apply(*args):
     return _adam.heman_lighting_apply(*args)
 heman_lighting_apply = _adam.heman_lighting_apply
+
+def heman_generate_archipelago_political_1(*args):
+    return _adam.heman_generate_archipelago_political_1(*args)
+heman_generate_archipelago_political_1 = _adam.heman_generate_archipelago_political_1
 # This file is compatible with both classic and new-style classes.
 
 

@@ -27,9 +27,14 @@ class Generate(object):
             width, height, points.pts, noiseamt, seed)
         return Image(img)
 
-    # @staticmethod
-    # def archipelago_political(width, height, points, colors, ocean_color,
-    #                           noiseamt, seed):
-    #     el, po = adam.heman_generate_archipelago_political(
-    #         width, height, points, colors, ocean_color, noiseamt, seed)
-    #     return Image(el), Image(po)
+    @staticmethod
+    def archipelago_political(width, height, points, colors, ocean_color,
+                              noiseamt, seed):
+
+        political = adam.heman_generate_archipelago_political_1(
+            width, height, points.pts, colors, ocean_color, noiseamt, seed)
+
+        elevation = adam.heman_generate_archipelago_political_2(
+            width, height, ocean_color, seed, political)
+
+        return Image(elevation), Image(political)

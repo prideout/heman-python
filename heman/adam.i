@@ -3,6 +3,14 @@
 %{
 #define SWIG_FILE_WITH_INIT
 #include "heman.h"
+
+heman_image* heman_generate_archipelago_political_1(int width, int height,
+    heman_points* points, const heman_color* colors, heman_color ocean,
+    float noiseamt, int seed);
+
+heman_image* heman_generate_archipelago_political_2(int width, int height,
+    heman_color ocean, int seed, heman_image* political);
+
 %}
 
 %inline %{
@@ -31,8 +39,17 @@ import_array();
 %rename (heman_export_u8) export_u8;
 %rename (heman_import_u8) import_u8;
 %rename (heman_lighting_apply) lighting_apply;
+%rename (heman_generate_archipelago_political_1) generate_archipelago_political_1;
 
 %inline %{
+
+heman_image* heman_generate_archipelago_political_1(int width, int height,
+    heman_points* points, const heman_color* colors, heman_color ocean,
+    float noiseamt, int seed);
+
+heman_image* heman_generate_archipelago_political_2(int width, int height,
+    heman_color ocean, int seed, heman_image* political);
+
 heman_points* points_create(int DIM1, float* IN_ARRAY1, int nbands)
 {
     return heman_points_create(IN_ARRAY1, DIM1 / nbands, nbands);
@@ -71,6 +88,16 @@ heman_image* lighting_apply(heman_image* heightmap,
     return heman_lighting_apply(heightmap,
         colorbuffer, occlusion, diffuse,
         diffuse_softening, lightpos);
+}
+
+heman_image* generate_archipelago_political_1(int width, int height,
+    heman_points* points, int ncols, unsigned int* cols, heman_color ocean,
+    float noiseamt, int seed)
+{
+    // TODO: check ncols against "points" width.
+
+    return heman_generate_archipelago_political_1(
+        width, height, points, cols, ocean, noiseamt, seed);
 }
 
 %}
