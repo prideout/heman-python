@@ -18,7 +18,7 @@ After that, you just do this in a fresh terminal:
 ```
 source env/bin/activate
 python setup.py build_ext
-python setup.py build
+python setup.py develop
 py.test test/test_heman.py
 ```
 

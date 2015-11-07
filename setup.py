@@ -11,8 +11,8 @@ gcc_args = '-O3 -std=c99'.split()
 link_args = []
 
 if sys.platform != 'darwin':
-    link_args += '-fopenmp'
-    gcc_args += '-fopenmp'
+    link_args.append('-fopenmp')
+    gcc_args.append('-fopenmp')
 
 setup(
     name='heman',
