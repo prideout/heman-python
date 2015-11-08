@@ -34,6 +34,12 @@ class Ops(object):
         return Image(adam.heman_ops_sweep(img.img))
 
     @staticmethod
-    def stairstep(img, nsteps_water, nsteps_land):
+    def stairstep(img, nsteps_water, nsteps_land, lip):
         return Image(adam.heman_ops_stairstep(img.img, nsteps_water,
-                     nsteps_land))
+                     nsteps_land, lip))
+
+    @staticmethod
+    def merge_political(elevation, political, ocean_color):
+        img = adam.heman_ops_merge_political(elevation.img, political.img,
+                                             ocean_color)
+        return Image(img)

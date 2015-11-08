@@ -249,8 +249,8 @@ def heman_ops_step(image, threshold):
     return _adam.heman_ops_step(image, threshold)
 heman_ops_step = _adam.heman_ops_step
 
-def heman_ops_stairstep(image, nsteps_water, nsteps_land):
-    return _adam.heman_ops_stairstep(image, nsteps_water, nsteps_land)
+def heman_ops_stairstep(image, nsteps_water, nsteps_land, lip):
+    return _adam.heman_ops_stairstep(image, nsteps_water, nsteps_land, lip)
 heman_ops_stairstep = _adam.heman_ops_stairstep
 
 def heman_ops_sweep(image):
@@ -280,6 +280,10 @@ heman_ops_extract_mask = _adam.heman_ops_extract_mask
 def heman_ops_replace_color(src, color, texture):
     return _adam.heman_ops_replace_color(src, color, texture)
 heman_ops_replace_color = _adam.heman_ops_replace_color
+
+def heman_ops_merge_political(elevation, political, ocean_color):
+    return _adam.heman_ops_merge_political(elevation, political, ocean_color)
+heman_ops_merge_political = _adam.heman_ops_merge_political
 
 def heman_points_destroy(arg1):
     return _adam.heman_points_destroy(arg1)
