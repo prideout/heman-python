@@ -189,8 +189,8 @@ def heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed):
     return _adam.heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed)
 heman_generate_archipelago_heightmap = _adam.heman_generate_archipelago_heightmap
 
-def heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political):
-    return _adam.heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political)
+def heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political, elevation_mode):
+    return _adam.heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political, elevation_mode)
 heman_generate_archipelago_political = _adam.heman_generate_archipelago_political
 
 def heman_generate_simplex_fbm(width, height, frequency, amplitude, octaves, lacunarity, gain, seed):
@@ -273,8 +273,8 @@ def heman_ops_warp(src, seed, octaves):
     return _adam.heman_ops_warp(src, seed, octaves)
 heman_ops_warp = _adam.heman_ops_warp
 
-def heman_ops_extract_mask(src, color):
-    return _adam.heman_ops_extract_mask(src, color)
+def heman_ops_extract_mask(src, color, invert):
+    return _adam.heman_ops_extract_mask(src, color, invert)
 heman_ops_extract_mask = _adam.heman_ops_extract_mask
 
 def heman_ops_replace_color(src, color, texture):
@@ -325,8 +325,8 @@ def heman_draw_contour_from_points(target, coords, color, mind, maxd):
     return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd)
 heman_draw_contour_from_points = _adam.heman_draw_contour_from_points
 
-def heman_generate_archipelago_political_2(width, height, ocean, seed, political):
-    return _adam.heman_generate_archipelago_political_2(width, height, ocean, seed, political)
+def heman_generate_archipelago_political_2(width, height, ocean, seed, political, invert):
+    return _adam.heman_generate_archipelago_political_2(width, height, ocean, seed, political, invert)
 heman_generate_archipelago_political_2 = _adam.heman_generate_archipelago_political_2
 
 def heman_points_create(*args):
@@ -352,6 +352,10 @@ heman_lighting_apply = _adam.heman_lighting_apply
 def heman_generate_archipelago_political_1(*args):
     return _adam.heman_generate_archipelago_political_1(*args)
 heman_generate_archipelago_political_1 = _adam.heman_generate_archipelago_political_1
+
+def heman_generate_archipelago_political_3(*args):
+    return _adam.heman_generate_archipelago_political_3(*args)
+heman_generate_archipelago_political_3 = _adam.heman_generate_archipelago_political_3
 # This file is compatible with both classic and new-style classes.
 
 

@@ -29,12 +29,15 @@ class Generate(object):
 
     @staticmethod
     def archipelago_political(width, height, points, colors, ocean_color,
-                              seed):
+                              seed, elevation_mode):
 
         political = adam.heman_generate_archipelago_political_1(
             width, height, points.pts, colors, ocean_color, seed)
-
-        elevation = adam.heman_generate_archipelago_political_2(
-            width, height, ocean_color, seed, political)
-
+        if elevation_mode == 0:
+            elevation = adam.heman_generate_archipelago_political_2(
+                width, height, ocean_color, seed, political, 0)
+        else:
+            ncolors = points.width
+            elevation = adam.heman_generate_archipelago_political_3(
+                width, height, colors, ocean_color, seed, political);
         return Image(elevation), Image(political)

@@ -9,7 +9,11 @@ heman_image* heman_generate_archipelago_political_1(int width, int height,
     int seed);
 
 heman_image* heman_generate_archipelago_political_2(int width, int height,
-    heman_color ocean, int seed, heman_image* political);
+    heman_color ocean, int seed, heman_image* political, int invert);
+
+heman_image* heman_generate_archipelago_political_3(int width, int height,
+    const heman_color* colors, int ncolors, heman_color ocean, int seed,
+    heman_image* political);
 
 %}
 
@@ -40,6 +44,7 @@ import_array();
 %rename (heman_import_u8) import_u8;
 %rename (heman_lighting_apply) lighting_apply;
 %rename (heman_generate_archipelago_political_1) generate_archipelago_political_1;
+%rename (heman_generate_archipelago_political_3) generate_archipelago_political_3;
 
 %inline %{
 
@@ -48,7 +53,11 @@ heman_image* heman_generate_archipelago_political_1(int width, int height,
     int seed);
 
 heman_image* heman_generate_archipelago_political_2(int width, int height,
-    heman_color ocean, int seed, heman_image* political);
+    heman_color ocean, int seed, heman_image* political, int invert);
+
+heman_image* heman_generate_archipelago_political_3(int width, int height,
+    const heman_color* colors, int ncolors, heman_color ocean, int seed,
+    heman_image* political);
 
 heman_points* points_create(int DIM1, float* IN_ARRAY1, int nbands)
 {
@@ -98,6 +107,14 @@ heman_image* generate_archipelago_political_1(int width, int height,
 
     return heman_generate_archipelago_political_1(
         width, height, points, cols, ocean, seed);
+}
+
+heman_image* generate_archipelago_political_3(int width, int height,
+    int ncols, unsigned int* cols, heman_color ocean, int seed,
+    heman_image* political)
+{
+    return heman_generate_archipelago_political_3(
+        width, height, cols, ncols, ocean, seed, political);
 }
 
 %}
