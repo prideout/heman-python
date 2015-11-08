@@ -43,3 +43,11 @@ class Ops(object):
         img = adam.heman_ops_merge_political(elevation.img, political.img,
                                              ocean_color)
         return Image(img)
+
+    @staticmethod
+    def emboss(elevation, mode):
+        return Image(adam.heman_ops_emboss(elevation.img, mode))
+
+    @staticmethod
+    def sobel(src, beach_color):
+        return Image(adam.heman_ops_sobel(src.img, beach_color))

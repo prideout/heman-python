@@ -285,6 +285,10 @@ def heman_ops_merge_political(elevation, political, ocean_color):
     return _adam.heman_ops_merge_political(elevation, political, ocean_color)
 heman_ops_merge_political = _adam.heman_ops_merge_political
 
+def heman_ops_emboss(elevation, mode):
+    return _adam.heman_ops_emboss(elevation, mode)
+heman_ops_emboss = _adam.heman_ops_emboss
+
 def heman_points_destroy(arg1):
     return _adam.heman_points_destroy(arg1)
 heman_points_destroy = _adam.heman_points_destroy

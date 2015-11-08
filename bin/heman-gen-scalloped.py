@@ -7,9 +7,9 @@ import numpy as np
 import PIL.Image
 
 POLITICAL_COLORS = [
-    0x92A35F,
-    0xBFD671,
-    0xD8F590
+    0xFFFFE0,
+    0xFFEFE0,
+    0xE0FFE0
 ]
 
 SEED_POINTS = [
@@ -26,11 +26,15 @@ def generate_terrain():
     points = heman.Points.create(np.array(SEED_POINTS, dtype=np.float32), 3)
     noiseamt = 0.5
     seed = 2
+    size = 1024
     elevation, political = heman.Generate.archipelago_political(
-        1024, 1024, points, POLITICAL_COLORS, OCEAN_COLOR, noiseamt, seed)
+        size, size, points, POLITICAL_COLORS, OCEAN_COLOR, noiseamt, seed)
+    elevation = heman.Ops.emboss(elevation, -1);
     elevation = heman.Ops.stairstep(elevation, 2, 6, 1);
+    political = heman.Ops.sobel(political, 0x0);
     political = heman.Ops.merge_political(elevation, political, OCEAN_COLOR)
-    heman.Lighting.set_occlusion_scale(20)
+    elevation = heman.Ops.emboss(elevation, 1);
+    heman.Lighting.set_occlusion_scale(5)
     final = heman.Lighting.apply(elevation, political, 1, 1, 0.5, LIGHTPOS)
     array = heman.Export.u8(final, 0, 1)
     im = PIL.Image.fromarray(array, 'RGB')
