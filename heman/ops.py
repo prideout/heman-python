@@ -32,3 +32,8 @@ class Ops(object):
     @staticmethod
     def sweep(img):
         return Image(adam.heman_ops_sweep(img.img))
+
+    @staticmethod
+    def stairstep(img, nsteps_water, nsteps_land):
+        return Image(adam.heman_ops_stairstep(img.img, nsteps_water,
+                     nsteps_land))

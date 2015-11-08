@@ -205,6 +205,10 @@ def heman_lighting_compute_occlusion(heightmap):
     return _adam.heman_lighting_compute_occlusion(heightmap)
 heman_lighting_compute_occlusion = _adam.heman_lighting_compute_occlusion
 
+def heman_lighting_set_occlusion_scale(s):
+    return _adam.heman_lighting_set_occlusion_scale(s)
+heman_lighting_set_occlusion_scale = _adam.heman_lighting_set_occlusion_scale
+
 def heman_distance_create_sdf(monochrome):
     return _adam.heman_distance_create_sdf(monochrome)
 heman_distance_create_sdf = _adam.heman_distance_create_sdf
@@ -244,6 +248,10 @@ heman_ops_normalize_f32 = _adam.heman_ops_normalize_f32
 def heman_ops_step(image, threshold):
     return _adam.heman_ops_step(image, threshold)
 heman_ops_step = _adam.heman_ops_step
+
+def heman_ops_stairstep(image, nsteps_water, nsteps_land):
+    return _adam.heman_ops_stairstep(image, nsteps_water, nsteps_land)
+heman_ops_stairstep = _adam.heman_ops_stairstep
 
 def heman_ops_sweep(image):
     return _adam.heman_ops_sweep(image)

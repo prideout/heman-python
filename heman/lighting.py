@@ -12,6 +12,10 @@ class Lighting(object):
             diffuse, softening, x, y, z))
 
     @staticmethod
+    def set_occlusion_scale(s):
+        adam.heman_lighting_set_occlusion_scale(s)
+
+    @staticmethod
     def compute_occlusion(elevation):
         assert elevation.nbands == 1
         return Image(adam.heman_lighting_compute_occlusion(elevation.img))
