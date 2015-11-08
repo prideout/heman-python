@@ -189,8 +189,8 @@ def heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed):
     return _adam.heman_generate_archipelago_heightmap(width, height, points, noiseamt, seed)
 heman_generate_archipelago_heightmap = _adam.heman_generate_archipelago_heightmap
 
-def heman_generate_archipelago_political(width, height, points, colors, ocean, noiseamt, seed, elevation, political):
-    return _adam.heman_generate_archipelago_political(width, height, points, colors, ocean, noiseamt, seed, elevation, political)
+def heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political):
+    return _adam.heman_generate_archipelago_political(width, height, points, colors, ocean, seed, elevation, political)
 heman_generate_archipelago_political = _adam.heman_generate_archipelago_political
 
 def heman_generate_simplex_fbm(width, height, frequency, amplitude, octaves, lacunarity, gain, seed):
