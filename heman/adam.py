@@ -249,9 +249,13 @@ def heman_ops_step(image, threshold):
     return _adam.heman_ops_step(image, threshold)
 heman_ops_step = _adam.heman_ops_step
 
-def heman_ops_stairstep(image, nsteps_water, nsteps_land, lip):
-    return _adam.heman_ops_stairstep(image, nsteps_water, nsteps_land, lip)
+def heman_ops_stairstep(image, nsteps, mask, mask_color, invert_mask, offset):
+    return _adam.heman_ops_stairstep(image, nsteps, mask, mask_color, invert_mask, offset)
 heman_ops_stairstep = _adam.heman_ops_stairstep
+
+def heman_ops_percentiles(image, nsteps, mask, mask_color, invert_mask, offset):
+    return _adam.heman_ops_percentiles(image, nsteps, mask, mask_color, invert_mask, offset)
+heman_ops_percentiles = _adam.heman_ops_percentiles
 
 def heman_ops_sweep(image):
     return _adam.heman_ops_sweep(image)

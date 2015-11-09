@@ -34,9 +34,22 @@ class Ops(object):
         return Image(adam.heman_ops_sweep(img.img))
 
     @staticmethod
-    def stairstep(img, nsteps_water, nsteps_land, lip):
-        return Image(adam.heman_ops_stairstep(img.img, nsteps_water,
-                     nsteps_land, lip))
+    def stairstep(img, nsteps, mask, mask_color, invert_mask, offset):
+        if mask:
+            adam.heman_ops_stairstep(
+                img.img, nsteps, mask.img, mask_color, invert_mask, offset)
+        else:
+            adam.heman_ops_stairstep(
+                img.img, nsteps, None, mask_color, invert_mask, offset)
+
+    @staticmethod
+    def percentiles(img, nsteps, mask, mask_color, invert_mask, offset):
+        if mask:
+            adam.heman_ops_percentiles(
+                img.img, nsteps, mask.img, mask_color, invert_mask, offset)
+        else:
+            adam.heman_ops_percentiles(
+                img.img, nsteps, None, mask_color, invert_mask, offset)
 
     @staticmethod
     def merge_political(elevation, political, ocean_color):
