@@ -4,19 +4,23 @@
 
 import heman
 import numpy as np
+import time
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageEnhance
 
 
+SCALE = 2
+
+
 def generate_island():
-    elevation = heman.Generate.island_heightmap(2048, 2048, 90)
+    elevation = heman.Generate.island_heightmap(2048 * SCALE, 2048 * SCALE, 90)
     grad = heman.Color.create_gradient(256, GRADIENT)
     albedo = heman.Color.apply_gradient(elevation, -0.5, 0.5, grad)
     final = heman.Lighting.apply(elevation, albedo, 1, 1, 0.5, LIGHTPOS)
     array = heman.Export.u8(final, 0, 1)
     im = PIL.Image.fromarray(array, 'RGB')
-    im.resize((1024, 1024)).save('island.png')
+    im.resize((1024 * SCALE, 1024 * SCALE)).save('island.png')
 
 
 GRADIENT = [
@@ -34,4 +38,7 @@ LIGHTPOS = (-.5, .5, 1)
 if __name__ == '__main__':
     import multiprocessing
     print multiprocessing.cpu_count(), 'cores'
+    start_time = time.time()
     generate_island()
+    elapsed = time.time() - start_time
+    print('{:.3f} seconds.'.format(elapsed))
