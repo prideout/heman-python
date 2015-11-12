@@ -20,5 +20,9 @@ class Image(object):
         img = adam.heman_image_create(width, height, nbands)
         return cls(img)
 
+    @classmethod
+    def clear(cls, img, val):
+        adam.heman_image_clear(img.img, val)
+
     def __del__(self):
         adam.heman_image_destroy(self.img)

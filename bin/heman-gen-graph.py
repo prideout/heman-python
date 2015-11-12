@@ -7,6 +7,8 @@ import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 
+OCEAN_COLOR = 0x214562
+PADDING_FRACTION = 0.2
 SEED = 4
 COLORS = [
     0x74a99c, 0xbac270, 0x8cbb9b, 0xe59f5f,
@@ -14,8 +16,7 @@ COLORS = [
     0x778b52, 0x62918c, 0xb36b82, 0x7b576a,
     0x98688e, 0xf2c664, 0xffe48c, 0xc7cc8e,
     0x768e6c, 0xb29264, 0xb68c49, 0xd5847a,
-    0x935225, 0xc1be81, 0x8d7a81
-]
+    0x935225, 0xc1be81, 0x8d7a81]
 
 
 def generate_graph():
@@ -84,7 +85,7 @@ def generate_graph():
     print 'ncolors is', len(COLORS)
 
     extent = (maxp[0] - minp[0], maxp[1] - minp[1])
-    padding = extent[0] * 0.1
+    padding = extent[0] * PADDING_FRACTION
     minp[0] -= padding
     minp[1] -= padding
     maxp[0] += padding
@@ -109,20 +110,28 @@ def generate_graph():
     return flatarray
 
 
-def draw_graph(flatarray, filename):
-    width, height = 512, 512
+def draw_seed(flatarray, width, height):
     image = PIL.Image.new('RGB', (width, height))
     draw = PIL.ImageDraw.Draw(image)
+    colors = []
+    seeds = []
     for i in xrange(0, len(flatarray), 4):
-        x = width * flatarray[i]
-        y = height * flatarray[i + 1]
+        x = flatarray[i]
+        y = flatarray[i + 1]
         root = flatarray[i + 2]
         prom = flatarray[i + 3]
         c = COLORS[root % len(COLORS)]
-        c = ((c & 0xff) << 16) | (c & 0xff00) | (c >> 16)
-        draw.point((x, y), c)
-    image.save(filename)
-    print 'Produced', filename
+        colors.append(c)
+        seeds.append(x)
+        seeds.append(y)
+    contour = heman.Image.create(512, 512, 3)
+    heman.Image.clear(contour, 0)
+    points = heman.Points.create(np.array(seeds, dtype=np.float32), 2)
+    heman.Draw.colored_points(contour, points, colors)
+    heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.5, 0.52)
+    PIL.Image.fromarray(heman.Export.u8(contour, 0, 1)).save('graph.png')
+    return contour
+
 
 if not os.path.exists('graph.json'):
     flatarray = generate_graph()
@@ -130,18 +139,9 @@ if not os.path.exists('graph.json'):
     print 'Produced graph.json'
 
 flatarray = json.load(open('graph.json', 'rt'))
-draw_graph(flatarray, 'graph.png')
-
-image = PIL.Image.open('graph.png')
-array = np.asarray(image, dtype=np.uint8)
-seed = heman.Import.u8(array, 0, 1)
-
-# contour = heman_image_create(width, height, 3);
-# heman_image_clear(contour, 0);
-# heman.draw.contour_from_points(contour, points, colors)
-# heman_draw_colored_points(contour, points, colors)
-
-cpcf = heman.Distance.create_cpcf(seed)
-voronoi = heman.Color.from_cpcf(cpcf, seed)
+contour = draw_seed(flatarray, 512, 512)
+cpcf = heman.Distance.create_cpcf(contour)
+voronoi = heman.Color.from_cpcf(cpcf, contour)
+voronoi = heman.Ops.sobel(voronoi, 0)
 PIL.Image.fromarray(heman.Export.u8(voronoi, 0, 1)).save('voronoi.png')
 print 'Produced voronoi.png'

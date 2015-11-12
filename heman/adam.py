@@ -313,10 +313,6 @@ def heman_draw_points(target, pts, val):
     return _adam.heman_draw_points(target, pts, val)
 heman_draw_points = _adam.heman_draw_points
 
-def heman_draw_colored_points(target, coords, colors):
-    return _adam.heman_draw_colored_points(target, coords, colors)
-heman_draw_colored_points = _adam.heman_draw_colored_points
-
 def heman_draw_colored_circles(target, pts, radius, colors):
     return _adam.heman_draw_colored_circles(target, pts, radius, colors)
 heman_draw_colored_circles = _adam.heman_draw_colored_circles
@@ -340,6 +336,10 @@ heman_points_create = _adam.heman_points_create
 def heman_color_create_gradient(*args):
     return _adam.heman_color_create_gradient(*args)
 heman_color_create_gradient = _adam.heman_color_create_gradient
+
+def heman_draw_colored_points(*args):
+    return _adam.heman_draw_colored_points(*args)
+heman_draw_colored_points = _adam.heman_draw_colored_points
 
 def heman_export_u8(*args):
     return _adam.heman_export_u8(*args)

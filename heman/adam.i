@@ -45,6 +45,7 @@ import_array();
 %rename (heman_lighting_apply) lighting_apply;
 %rename (heman_generate_archipelago_political_1) generate_archipelago_political_1;
 %rename (heman_generate_archipelago_political_3) generate_archipelago_political_3;
+%rename (heman_draw_colored_points) draw_colored_points;
 
 %inline %{
 
@@ -74,6 +75,12 @@ heman_image* color_create_gradient(int width,
         return 0;
     }
     return heman_color_create_gradient(width, ncols, locs, cols);
+}
+
+void draw_colored_points(heman_image* target, heman_points* coords,
+    int ncols, unsigned int* cols)
+{
+    heman_draw_colored_points(target, coords, cols);
 }
 
 void export_u8(
