@@ -4,7 +4,8 @@ import heman
 import os
 import json
 import numpy as np
-from numpy.random import seed
+import PIL.Image
+import PIL.ImageDraw
 
 SEED = 4
 COLORS = [
@@ -25,6 +26,7 @@ def generate_graph():
 
     from graph_tool.all import price_network, sfdp_layout, graph_draw
     from graph_tool.all import dfs_search, DFSVisitor, seed_rng
+    from numpy.random import seed
 
     class AnnotationVisitor(DFSVisitor):
         def __init__(self, pred, dist):
@@ -108,8 +110,6 @@ def generate_graph():
 
 
 def draw_graph(flatarray, filename):
-    import PIL.Image
-    import PIL.ImageDraw
     width, height = 512, 512
     image = PIL.Image.new('RGB', (width, height))
     draw = PIL.ImageDraw.Draw(image)
@@ -118,7 +118,9 @@ def draw_graph(flatarray, filename):
         y = height * flatarray[i + 1]
         root = flatarray[i + 2]
         prom = flatarray[i + 3]
-        draw.point((x, y), COLORS[root % len(COLORS)])
+        c = COLORS[root % len(COLORS)]
+        c = ((c & 0xff) << 16) | (c & 0xff00) | (c >> 16)
+        draw.point((x, y), c)
     image.save(filename)
     print 'Produced', filename
 
@@ -130,9 +132,16 @@ if not os.path.exists('graph.json'):
 flatarray = json.load(open('graph.json', 'rt'))
 draw_graph(flatarray, 'graph.png')
 
+image = PIL.Image.open('graph.png')
+array = np.asarray(image, dtype=np.uint8)
+seed = heman.Import.u8(array, 0, 1)
 
-# array = np.asarray(image, dtype=np.uint8)
-# seed = heman.Import.u8(array, 0, 1)
-# df = heman.Distance.create_sdf(seed)
-# PIL.Image.fromarray(heman.Export.u8(df, -1, 1)).save('distance.png')
-# print 'Produced distance.png'
+# contour = heman_image_create(width, height, 3);
+# heman_image_clear(contour, 0);
+# heman.draw.contour_from_points(contour, points, colors)
+# heman_draw_colored_points(contour, points, colors)
+
+cpcf = heman.Distance.create_cpcf(seed)
+voronoi = heman.Color.from_cpcf(cpcf, seed)
+PIL.Image.fromarray(heman.Export.u8(voronoi, 0, 1)).save('voronoi.png')
+print 'Produced voronoi.png'

@@ -20,3 +20,7 @@ class Color(object):
     @staticmethod
     def set_gamma(f):
         adam.heman_color_set_gamma(f)
+
+    @staticmethod
+    def from_cpcf(cpcf, cmap):
+        return Image(adam.heman_color_from_cpcf(cpcf.img, cmap.img))
