@@ -7,7 +7,9 @@ import numpy as np
 import PIL.Image
 import PIL.ImageDraw
 
+BEACH_COLOR = 0xDBC38D
 OCEAN_COLOR = 0x214562
+INCLUDE_BEACH = False
 PADDING_FRACTION = 0.1
 SEED = 4
 COLORS = [
@@ -128,7 +130,11 @@ def draw_seed(flatarray, width, height):
     heman.Image.clear(contour, 0)
     points = heman.Points.create(np.array(seeds, dtype=np.float32), 2)
     heman.Draw.colored_points(contour, points, colors)
-    heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
+    if INCLUDE_BEACH:
+        heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.45, 0.495, 8)
+        heman.Draw.contour_from_points(contour, points, BEACH_COLOR, 0.495, 0.5, 8)
+    else:
+        heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
     PIL.Image.fromarray(heman.Export.u8(contour, 0, 1)).save('graph.png')
     return contour
 
