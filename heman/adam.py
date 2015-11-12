@@ -321,8 +321,8 @@ def heman_draw_splats(target, pts, radius, blend_mode):
     return _adam.heman_draw_splats(target, pts, radius, blend_mode)
 heman_draw_splats = _adam.heman_draw_splats
 
-def heman_draw_contour_from_points(target, coords, color, mind, maxd):
-    return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd)
+def heman_draw_contour_from_points(target, coords, color, mind, maxd, filterd):
+    return _adam.heman_draw_contour_from_points(target, coords, color, mind, maxd, filterd)
 heman_draw_contour_from_points = _adam.heman_draw_contour_from_points
 
 def heman_generate_archipelago_political_2(width, height, ocean, seed, political, invert):

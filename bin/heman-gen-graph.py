@@ -8,7 +8,7 @@ import PIL.Image
 import PIL.ImageDraw
 
 OCEAN_COLOR = 0x214562
-PADDING_FRACTION = 0.2
+PADDING_FRACTION = 0.1
 SEED = 4
 COLORS = [
     0x74a99c, 0xbac270, 0x8cbb9b, 0xe59f5f,
@@ -124,11 +124,11 @@ def draw_seed(flatarray, width, height):
         colors.append(c)
         seeds.append(x)
         seeds.append(y)
-    contour = heman.Image.create(512, 512, 3)
+    contour = heman.Image.create(width, height, 3)
     heman.Image.clear(contour, 0)
     points = heman.Points.create(np.array(seeds, dtype=np.float32), 2)
     heman.Draw.colored_points(contour, points, colors)
-    heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.5, 0.52)
+    heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
     PIL.Image.fromarray(heman.Export.u8(contour, 0, 1)).save('graph.png')
     return contour
 
@@ -139,7 +139,7 @@ if not os.path.exists('graph.json'):
     print 'Produced graph.json'
 
 flatarray = json.load(open('graph.json', 'rt'))
-contour = draw_seed(flatarray, 512, 512)
+contour = draw_seed(flatarray, 1024, 1024)
 cpcf = heman.Distance.create_cpcf(contour)
 voronoi = heman.Color.from_cpcf(cpcf, contour)
 voronoi = heman.Ops.sobel(voronoi, 0)

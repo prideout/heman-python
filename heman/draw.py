@@ -13,6 +13,6 @@ class Draw(object):
         adam.heman_draw_colored_points(target.img, coords.pts, colors)
 
     @staticmethod
-    def contour_from_points(target, coords, color, mind, maxd):
+    def contour_from_points(target, coords, color, mind, maxd, filterd):
         adam.heman_draw_contour_from_points(
-            target.img, coords.pts, color, mind, maxd)
+            target.img, coords.pts, color, mind, maxd, filterd)
