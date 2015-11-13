@@ -64,3 +64,7 @@ class Ops(object):
     @staticmethod
     def sobel(src, beach_color):
         return Image(adam.heman_ops_sobel(src.img, beach_color))
+
+    @staticmethod
+    def warp(src, seed, noctaves):
+        return Image(adam.heman_ops_warp(src.img, seed, noctaves))

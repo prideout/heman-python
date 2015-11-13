@@ -12,7 +12,7 @@ OCEAN_COLOR = 0x214562
 RIVER_COLOR = 0x7FAAC4
 INCLUDE_BEACH = False
 PADDING_FRACTION = 0.1
-SEED = 4
+SEED = 6
 LIGHTPOS = (-.5, .5, 1)
 COLORS = [
     0x74a99c, 0xbac270, 0x8cbb9b, 0xe59f5f,
@@ -147,7 +147,7 @@ def draw_seed(flatarray, width, height):
             contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
     graph = heman.Image.extract_rgb(contour)
     PIL.Image.fromarray(heman.Export.u8(graph, 0, 1)).save('graph.png')
-    return contour
+    return contour, points
 
 
 if not os.path.exists('graph.json'):
@@ -157,18 +157,23 @@ if not os.path.exists('graph.json'):
 
 res = 1024
 flatarray = json.load(open('graph.json', 'rt'))
-contour = draw_seed(flatarray, res, res)
+contour, points = draw_seed(flatarray, res, res)
 cpcf = heman.Distance.create_cpcf(contour)
 voronoi = heman.Color.from_cpcf(cpcf, contour)
+voronoi = heman.Ops.warp(voronoi, 1, 4)
 elevation = heman.Image.extract_alpha(voronoi)
 voronoi = heman.Image.extract_rgb(voronoi)
 
 # Reduce diffuse because discontinuities cause weird lighting along rims.
-heman.Lighting.set_occlusion_scale(5)
+heman.Lighting.set_occlusion_scale(15)
 final = heman.Lighting.apply(elevation, voronoi, 1, 0.25, 0.25, LIGHTPOS)
 PIL.Image.fromarray(heman.Export.u8(final, 0, 1)).save('final.png')
 print 'Produced final.png'
 
 voronoi = heman.Ops.sobel(voronoi, 0)
+voronoi = heman.Ops.sobel(voronoi, 0)
+heman.Draw.splats(voronoi, points, 3, 0)
+heman.Draw.splats(voronoi, points, 2, 0)
+heman.Draw.splats(voronoi, points, 2, 0)
 PIL.Image.fromarray(heman.Export.u8(voronoi, 0, 1)).save('voronoi.png')
 print 'Produced voronoi.png'
