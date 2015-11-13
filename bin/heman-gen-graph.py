@@ -9,9 +9,11 @@ import PIL.ImageDraw
 
 BEACH_COLOR = 0xDBC38D
 OCEAN_COLOR = 0x214562
+RIVER_COLOR = 0x7FAAC4
 INCLUDE_BEACH = False
 PADDING_FRACTION = 0.1
 SEED = 4
+LIGHTPOS = (-.5, .5, 1)
 COLORS = [
     0x74a99c, 0xbac270, 0x8cbb9b, 0xe59f5f,
     0x4a7957, 0xecc15e, 0xc55d55, 0x8ba578,
@@ -113,29 +115,38 @@ def generate_graph():
 
 
 def draw_seed(flatarray, width, height):
-    image = PIL.Image.new('RGB', (width, height))
+    image = PIL.Image.new('RGBA', (width, height))
     draw = PIL.ImageDraw.Draw(image)
     colors = []
     seeds = []
+    maxprom = 0
+    for i in xrange(0, len(flatarray), 4):
+        maxprom = max(maxprom, flatarray[i + 3])
+    promscale = int(255 / (maxprom + 1))
     for i in xrange(0, len(flatarray), 4):
         x = flatarray[i]
         y = flatarray[i + 1]
         root = flatarray[i + 2]
         prom = flatarray[i + 3]
         c = COLORS[root % len(COLORS)]
+        c |= (255 - prom * promscale) << 24
         colors.append(c)
         seeds.append(x)
         seeds.append(y)
-    contour = heman.Image.create(width, height, 3)
+    contour = heman.Image.create(width, height, 4)
     heman.Image.clear(contour, 0)
     points = heman.Points.create(np.array(seeds, dtype=np.float32), 2)
     heman.Draw.colored_points(contour, points, colors)
     if INCLUDE_BEACH:
-        heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.45, 0.495, 8)
-        heman.Draw.contour_from_points(contour, points, BEACH_COLOR, 0.495, 0.5, 8)
+        heman.Draw.contour_from_points(
+            contour, points, OCEAN_COLOR, 0.45, 0.495, 8)
+        heman.Draw.contour_from_points(
+            contour, points, BEACH_COLOR, 0.495, 0.5, 8)
     else:
-        heman.Draw.contour_from_points(contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
-    PIL.Image.fromarray(heman.Export.u8(contour, 0, 1)).save('graph.png')
+        heman.Draw.contour_from_points(
+            contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
+    graph = heman.Image.extract_rgb(contour)
+    PIL.Image.fromarray(heman.Export.u8(graph, 0, 1)).save('graph.png')
     return contour
 
 
@@ -144,10 +155,20 @@ if not os.path.exists('graph.json'):
     json.dump(flatarray, open('graph.json', 'wt'))
     print 'Produced graph.json'
 
+res = 1024
 flatarray = json.load(open('graph.json', 'rt'))
-contour = draw_seed(flatarray, 1024, 1024)
+contour = draw_seed(flatarray, res, res)
 cpcf = heman.Distance.create_cpcf(contour)
 voronoi = heman.Color.from_cpcf(cpcf, contour)
+elevation = heman.Image.extract_alpha(voronoi)
+voronoi = heman.Image.extract_rgb(voronoi)
+
+# Reduce diffuse because discontinuities cause weird lighting along rims.
+heman.Lighting.set_occlusion_scale(5)
+final = heman.Lighting.apply(elevation, voronoi, 1, 0.25, 0.25, LIGHTPOS)
+PIL.Image.fromarray(heman.Export.u8(final, 0, 1)).save('final.png')
+print 'Produced final.png'
+
 voronoi = heman.Ops.sobel(voronoi, 0)
 PIL.Image.fromarray(heman.Export.u8(voronoi, 0, 1)).save('voronoi.png')
 print 'Produced voronoi.png'

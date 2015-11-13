@@ -24,5 +24,13 @@ class Image(object):
     def clear(cls, img, val):
         adam.heman_image_clear(img.img, val)
 
+    @classmethod
+    def extract_alpha(cls, img):
+        return Image(adam.heman_image_extract_alpha(img.img))
+
+    @classmethod
+    def extract_rgb(cls, img):
+        return Image(adam.heman_image_extract_rgb(img.img))
+
     def __del__(self):
         adam.heman_image_destroy(self.img)

@@ -28,6 +28,7 @@ setup(
         ext_src,
         include_dirs=include_dirs,
         extra_link_args=link_args,
+        undef_macros=['NDEBUG'],
         extra_compile_args=gcc_args)],
     packages=['heman'],
     install_requires=['Pillow', 'pytest', 'numpy'])

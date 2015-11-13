@@ -157,6 +157,14 @@ def heman_image_destroy(arg1):
     return _adam.heman_image_destroy(arg1)
 heman_image_destroy = _adam.heman_image_destroy
 
+def heman_image_extract_alpha(arg1):
+    return _adam.heman_image_extract_alpha(arg1)
+heman_image_extract_alpha = _adam.heman_image_extract_alpha
+
+def heman_image_extract_rgb(arg1):
+    return _adam.heman_image_extract_rgb(arg1)
+heman_image_extract_rgb = _adam.heman_image_extract_rgb
+
 def heman_color_set_gamma(f):
     return _adam.heman_color_set_gamma(f)
 heman_color_set_gamma = _adam.heman_color_set_gamma

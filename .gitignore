@@ -9,3 +9,4 @@ heman.py
 .coverage
 *.pem
 env
+graph.json
