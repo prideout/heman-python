@@ -36,11 +36,11 @@ def generate_terrain():
     heman.Ops.percentiles(elevation, 3, political, OCEAN_COLOR, 0, -1)
     for p in POLITICAL_COLORS:
         heman.Ops.percentiles(elevation, 3, political, p, 0, 1)
-    political = heman.Ops.merge_political(elevation, political, OCEAN_COLOR)
 
     # Reduce diffuse because discontinuities cause weird lighting along rims.
     final = heman.Lighting.apply(elevation, political, 1, 0.25, 0.25, LIGHTPOS)
 
+    political = heman.Ops.merge_political(elevation, political, OCEAN_COLOR)
     array = heman.Export.u8(final, 0, 1)
     im = PIL.Image.fromarray(array, 'RGB')
     if DO_RESIZE:
