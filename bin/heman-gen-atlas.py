@@ -17,8 +17,8 @@ def generate_rocks(seed, nrocks):
     images = []
     for n in xrange(nrocks):
         elevation = heman.Generate.rock_heightmap(SCALE, SCALE, seed + n)
-        heman.Lighting.set_occlusion_scale(0.2)
-        lit = heman.Lighting.apply(elevation, None, 1, 0.75, 0.5, LIGHTPOS)
+        heman.Lighting.set_occlusion_scale(5.0)
+        lit = heman.Lighting.apply(elevation, None, 1, 0.5, 0.5, LIGHTPOS)
         images.append(lit)
     return heman.Ops.stitch_horizontal(images)
 
@@ -37,7 +37,7 @@ if __name__ == '__main__':
         rows.append(generate_rocks(seed, ncols))
         seed = seed + ncols
     final = heman.Ops.stitch_vertical(rows)
-    array = heman.Export.u8(final, 0, 0.9)
+    array = heman.Export.u8(final, 0, 0.925)
     im = PIL.Image.fromarray(array, 'RGB')
     im.resize((ncols * SCALE / 4, nrows * SCALE / 4)).save('atlas.png')
 
