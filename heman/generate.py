@@ -9,6 +9,11 @@ class Generate(object):
         return Image(img)
 
     @staticmethod
+    def rock_heightmap(width, height, seed):
+        img = adam.heman_generate_rock_heightmap(width, height, seed)
+        return Image(img)
+
+    @staticmethod
     def simplex_fbm(width, height, frequency, amplitude, octaves, lacunarity,
                     gain, seed):
         img = adam.heman_generate_simplex_fbm(

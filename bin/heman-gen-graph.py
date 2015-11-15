@@ -145,8 +145,6 @@ def draw_seed(flatarray, width, height):
     else:
         heman.Draw.contour_from_points(
             contour, points, OCEAN_COLOR, 0.4, 0.45, 8)
-    graph = heman.Image.extract_rgb(contour)
-    PIL.Image.fromarray(heman.Export.u8(graph, 0, 1)).save('graph.png')
     return contour, points
 
 
@@ -160,20 +158,22 @@ flatarray = json.load(open('graph.json', 'rt'))
 contour, points = draw_seed(flatarray, res, res)
 cpcf = heman.Distance.create_cpcf(contour)
 voronoi = heman.Color.from_cpcf(cpcf, contour)
-voronoi = heman.Ops.warp(voronoi, 1, 4)
+voronoi = heman.Ops.warp_points(voronoi, 1, 4, points)
 elevation = heman.Image.extract_alpha(voronoi)
 voronoi = heman.Image.extract_rgb(voronoi)
 
 # Reduce diffuse because discontinuities cause weird lighting along rims.
 heman.Lighting.set_occlusion_scale(15)
 final = heman.Lighting.apply(elevation, voronoi, 1, 0.25, 0.25, LIGHTPOS)
-PIL.Image.fromarray(heman.Export.u8(final, 0, 1)).save('final.png')
-print 'Produced final.png'
 
 voronoi = heman.Ops.sobel(voronoi, 0)
 voronoi = heman.Ops.sobel(voronoi, 0)
 heman.Draw.splats(voronoi, points, 3, 0)
 heman.Draw.splats(voronoi, points, 2, 0)
 heman.Draw.splats(voronoi, points, 2, 0)
-PIL.Image.fromarray(heman.Export.u8(voronoi, 0, 1)).save('voronoi.png')
-print 'Produced voronoi.png'
+
+graph = heman.Image.extract_rgb(contour)
+filmstrip = heman.Ops.stitch_horizontal([graph, voronoi, final])
+array = heman.Export.u8(filmstrip, 0, 1)
+PIL.Image.fromarray(array, 'RGB').save('filmstrip.png')
+print 'Produced filmstrip.png'

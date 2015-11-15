@@ -21,6 +21,7 @@ setup(
     author='Philip Rideout',
     scripts=[
         'bin/heman-gen-island.py',
+        'bin/heman-gen-atlas.py',
         'bin/heman-gen-graph.py',
         'bin/heman-gen-scalloped.py'],
     ext_modules=[Extension(

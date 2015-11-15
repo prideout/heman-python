@@ -189,6 +189,10 @@ def heman_generate_island_heightmap(width, height, seed):
     return _adam.heman_generate_island_heightmap(width, height, seed)
 heman_generate_island_heightmap = _adam.heman_generate_island_heightmap
 
+def heman_generate_rock_heightmap(width, height, seed):
+    return _adam.heman_generate_rock_heightmap(width, height, seed)
+heman_generate_rock_heightmap = _adam.heman_generate_rock_heightmap
+
 def heman_generate_planet_heightmap(width, height, seed):
     return _adam.heman_generate_planet_heightmap(width, height, seed)
 heman_generate_planet_heightmap = _adam.heman_generate_planet_heightmap
@@ -232,6 +236,10 @@ heman_distance_create_cpcf = _adam.heman_distance_create_cpcf
 def heman_distance_from_cpcf(cf):
     return _adam.heman_distance_from_cpcf(cf)
 heman_distance_from_cpcf = _adam.heman_distance_from_cpcf
+
+def heman_distance_identity_cpcf(width, height):
+    return _adam.heman_distance_identity_cpcf(width, height)
+heman_distance_identity_cpcf = _adam.heman_distance_identity_cpcf
 
 def heman_export_ply(arg1, filename):
     return _adam.heman_export_ply(arg1, filename)
@@ -284,6 +292,10 @@ heman_ops_accumulate = _adam.heman_ops_accumulate
 def heman_ops_warp(src, seed, octaves):
     return _adam.heman_ops_warp(src, seed, octaves)
 heman_ops_warp = _adam.heman_ops_warp
+
+def heman_ops_warp_points(src, seed, octaves, pts):
+    return _adam.heman_ops_warp_points(src, seed, octaves, pts)
+heman_ops_warp_points = _adam.heman_ops_warp_points
 
 def heman_ops_extract_mask(src, color, invert):
     return _adam.heman_ops_extract_mask(src, color, invert)

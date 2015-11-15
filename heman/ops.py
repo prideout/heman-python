@@ -68,3 +68,8 @@ class Ops(object):
     @staticmethod
     def warp(src, seed, noctaves):
         return Image(adam.heman_ops_warp(src.img, seed, noctaves))
+
+    @staticmethod
+    def warp_points(src, seed, noctaves, points):
+        return Image(adam.heman_ops_warp_points(
+            src.img, seed, noctaves, points.pts))

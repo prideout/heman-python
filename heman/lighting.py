@@ -7,8 +7,9 @@ class Lighting(object):
     def apply(elevation, albedo, occlusion, diffuse, softening, lightpos):
         assert len(lightpos) == 3
         x, y, z = lightpos
+        albedo = albedo.img if albedo else None
         return Image(adam.heman_lighting_apply(
-            elevation.img, albedo.img, occlusion,
+            elevation.img, albedo, occlusion,
             diffuse, softening, x, y, z))
 
     @staticmethod
