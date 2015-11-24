@@ -26,6 +26,10 @@ class Ops(object):
         return Image(adam.heman_ops_normalize_f32(source.img, minval, maxval))
 
     @staticmethod
+    def max(imga, imgb):
+        return Image(adam.heman_ops_max(imga.img, imgb.img))
+
+    @staticmethod
     def step(img, threshold):
         return Image(adam.heman_ops_step(img.img, threshold))
 

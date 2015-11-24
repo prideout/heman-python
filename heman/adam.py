@@ -261,6 +261,10 @@ def heman_ops_normalize_f32(source, minval, maxval):
     return _adam.heman_ops_normalize_f32(source, minval, maxval)
 heman_ops_normalize_f32 = _adam.heman_ops_normalize_f32
 
+def heman_ops_max(imga, imgb):
+    return _adam.heman_ops_max(imga, imgb)
+heman_ops_max = _adam.heman_ops_max
+
 def heman_ops_step(image, threshold):
     return _adam.heman_ops_step(image, threshold)
 heman_ops_step = _adam.heman_ops_step

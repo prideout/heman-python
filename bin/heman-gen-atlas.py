@@ -5,18 +5,27 @@
 import heman
 import numpy as np
 import time
+import random
 import PIL.Image
 import PIL.ImageDraw
 import PIL.ImageEnhance
 
 
 SCALE = 256
+rgen = random.Random()
 
 
 def generate_rocks(seed, nrocks):
     images = []
     for n in xrange(nrocks):
         elevation = heman.Generate.rock_heightmap(SCALE, SCALE, seed + n)
+
+        # Sometimes, generate a two-piece compound rock:
+        if rgen.random() < 0.75:
+            seed2 = 1000 + seed + n
+            elev2 = heman.Generate.rock_heightmap(SCALE, SCALE, seed2)
+            elevation = heman.Ops.max(elevation, elev2)
+
         heman.Lighting.set_occlusion_scale(5.0)
         lit = heman.Lighting.apply(elevation, None, 1, 0.5, 0.5, LIGHTPOS)
         images.append(lit)
