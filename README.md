@@ -3,7 +3,7 @@
 
 ### OS X
 
-If you're building this for the first time, here are the prerequisites:
+If you're building this for the first time, perform these steps after cloning the repo:
 
 ```
 brew install swig
@@ -18,11 +18,10 @@ After that, you just do this in a fresh terminal:
 ```
 source env/bin/activate
 python setup.py build_ext
-python setup.py build
+python setup.py build install
 py.test test/test_heman.py
+open island.png
 ```
-
-The above command sequence is also in `bin/mac-setup.sh`.
 
 ## Building on AWS EC2
 
